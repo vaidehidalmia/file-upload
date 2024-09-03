@@ -30,7 +30,17 @@ async function downloadFile(fileKey) {
     return Body
 }
 
+async function deleteFile(fileKey) {
+    const params = {
+        Key: fileKey,
+        Bucket: bucketName
+    }
+    const { Body } = await s3.deleteObject(params).promise();
+    return Body
+}
+
 module.exports = {
     getFilesList,
-    downloadFile
+    downloadFile,
+    deleteFile
 }

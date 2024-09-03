@@ -3,7 +3,7 @@ const cors = require('cors')
 const port = 8000
 const app = express()
 
-const { getFilesList, downloadFile } = require('./s3')
+const { getFilesList, downloadFile, deleteFile } = require('./s3')
 
 app.use(cors());
 app.use(express.json());
@@ -32,6 +32,17 @@ app.get('/downloadFile/:fileKey', async (req, res) => {
   try {
     const file = await downloadFile(fileKey);
     res.send(file);
+  } catch (error) {
+    console.log(error);
+    res.send([]);
+  }
+})
+
+app.get('/deleteFile/:fileKey', async (req, res) => {
+  const { fileKey } = req.params;
+  try {
+    const data = await deleteFile(fileKey);
+    res.send(data);
   } catch (error) {
     console.log(error);
     res.send([]);

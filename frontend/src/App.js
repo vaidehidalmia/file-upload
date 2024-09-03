@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { downloadFile, getFilesList } from './api';
+import { downloadFile, getFilesList, deleteFile } from './api';
 
 function App() {
   const [filesList, setFilesList] = useState([]);
@@ -35,6 +35,15 @@ function App() {
     console.log(`Downloaded file: ${fileKey}`);
   }
 
+  const handleDeleteFile = async (fileKey) => {
+    console.log(fileKey);
+    await deleteFile(fileKey);
+    console.log(`Deleted file: ${fileKey}`);
+    getFilesList().then(result => {
+      setFilesList(result);
+    });
+  }
+
   return (
     <div className="App">
       <ul id="files-list">
@@ -43,7 +52,7 @@ function App() {
             <li key={file.Key}>
               <div>{file.Key}</div>
               <button onClick={() => handleDownloadFile(file.Key)}>Download</button>
-              <button>Delete</button>
+              <button onClick={() => handleDeleteFile(file.Key)}>Delete</button>
             </li>
           ))
         }

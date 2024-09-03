@@ -29,3 +29,16 @@ export const downloadFile = (fileKey) => {
       });
   });
 }
+
+export const deleteFile = (fileKey) => {
+  const url = `${path}/deleteFile/${fileKey}`;
+  return new Promise((resolve, reject) => {
+    fetch(url)
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
